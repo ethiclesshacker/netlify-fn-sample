@@ -7,22 +7,24 @@ exports.handler = async (event, context) => {
     console.log('spawning chrome headless')
     try {
         const executablePath = await chromium.executablePath
-
+        
         // setup
         browser = await puppeteer.launch({
             args: chromium.args,
             executablePath: executablePath,
             headless: chromium.headless,
         })
-
+        console.log('spawning browser')
+        
         // Do stuff with headless chrome
         const page = await browser.newPage()
         const targetUrl = 'https://davidwells.io'
-
+        
         // Goto page and then do stuff
         await page.goto(targetUrl, {
             waitUntil: ["domcontentloaded", "networkidle0"]
         })
+        console.log('spawned page.')
 
         await page.waitForSelector('#phenomic')
 
