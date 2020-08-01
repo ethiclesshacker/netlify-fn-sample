@@ -7,12 +7,13 @@ exports.handler = async (event, context, callback) => {
     const response = await axios.get(LINK)
     const $ = cheerio.load(response.data);
 
-    const link = $("meta[property='og:image']").attr("content");
-
     console.log($("meta[property='og:image']").attr("content"));
+    const link = $("meta[property='og:image']").attr("content");
+    const data = { link };
+
 
     callback(null, {
         statusCode: 200,
-        body: link
+        body: JSON.stringify(data)
     });
 }
